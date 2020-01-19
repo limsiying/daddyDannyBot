@@ -5,28 +5,29 @@ import requests
 import apiai
 import json
 import re
+import datetime
 from random import randint
 
 TOKEN = '1016477578:AAGmmknBxRKyIbh_2XmRhcuK-fXwW0wJ9JE'
 DIALOG_TOKEN = '02ab3a2fe7494e2c80d38726ebeec2b0'
 updater = Updater(token=TOKEN, use_context=True)
 dp = updater.dispatcher
-
+    
 def start(update, context):
-    reply_keyboard = [['/japanese']]
-    update.message.reply_text(
-            'Hi! This is Daddy Danny, your best friend and go-to AI for learning languages!'
-            + ' Please select which language you want to learn (✿ ◕‿◕)',
-            reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
+   reply_keyboard = [['/japanese']]
+   update.message.reply_text(
+                'Hi! This is Daddy Danny, your best friend and go-to AI for learning languages!'
+                 + ' Please select which language you want to learn (✿ ◕‿◕)',
+                reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
 
 start_handler = CommandHandler('start', start)
 dp.add_handler(start_handler)
 
 def selectMode(update, context):
-    reply_keyboard = [['/alphabet', '/vocabulary', '/chat', '/exit']]
-    update.message.reply_text(
-            '°。*´¨What do you want to do today?° *´¨',
-            reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
+   reply_keyboard = [['/alphabet', '/vocabulary', '/chat', '/exit']]
+   update.message.reply_text(
+                '°。*´¨What do you want to do today?° *´¨',
+                reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
 
 mode_handler = CommandHandler('japanese', selectMode)
 dp.add_handler(mode_handler)
@@ -41,12 +42,63 @@ def generateAlphabet(update, context):
         'na', 'ni', 'nu', 'ne', 'no', 'ha', 'hi', 'fu', 'he', 'ho', 'ma', 'mi', 'mu', 'me', 'mo', 'ya', 'yu', 'yo', 'ra', 'ri', 'ru', 
         're', 'ro', 'wa', 'n']
     score = 0
-    for i in range(0, 5):
-        rng = randint(0, 45)
-        context.bot.send_message(chat_id=update.message.chat_id, text=hiragana_jap[rng])
-        guess = update.message.text
-        if guess == hiragana_romaji[rng]:
-            score += 1
+      
+    #rng = randint(0,45)
+    #context.bot.send_message(chat_id=update.message.chat_id,text=hiragana_jap[rng])
+    #update.message.reply_text(hiragana_jap[rng])
+    
+
+    #guess=update.message.text
+    #if guess == hiragana_romaji[rng]:
+    #    update.message.reply_text('Correct!(✿ ◕‿◕)')
+    #    score += 1
+    #else:
+    #    update.message.reply_text('Wrong uwu') 
+    
+    #for i in range(0, 5):
+    
+    char1 = randint(0,45)
+    char2 = randint(0,45)
+    
+    context.bot.send_message(chat_id=update.message.chat_id, text = hiragana_jap[char1])
+    reply_keyboard = [[hiragana_romaji[char1]],[hiragana_romaji[char2]]]
+    update.message.reply_text( 'Which is correct?',reply_markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard = True))
+    
+        
+
+    char3 = randint(0,45)
+    char4 = randint(0,45)
+    context.bot.send_message(chat_id=update.message.chat_id, text = hiragana_jap[char4])
+    reply_keyboard = [[hiragana_romaji[char3]],[hiragana_romaji[char4]]]
+    update.message.reply_text( 'Which is correct?',reply_markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard = True))
+   
+
+
+    char5 = randint(0,45)
+    char6 = randint(0,45)
+    context.bot.send_message(chat_id=update.message.chat_id, text = hiragana_jap[char6])      
+    reply_keyboard = [[hiragana_romaji[char6]],[hiragana_romaji[char5]]]
+    update.message.reply_text( 'Which is correct?',reply_markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard = True))
+    
+
+    #char2 = randint(0,45)
+    #char3 = randint(0,45)
+
+    #context.bot.send_message(chat_id=update.message.chat_id, text=hiragana_jap[rng])
+            
+    #opOne = randint(0,45)
+    #opTwo = randint(0,45)
+    #opThree = randint(0,45)
+
+    #reply_keyboard = [[]]
+    #update.message.reply_text('option1', reply_markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
+        
+                #  rng = randint(0, 45)
+      #  context.bot.send_message(chat_id=update.message.chat_id, text=hiragana_jap[rng])
+       # guess = update.message.text
+       # if guess == hiragana_romaji[rng]:
+       #     update.message.reply_text('Correct!(✿ ◕‿◕)')
+       #     score += 1
     context.bot.send_message(chat_id=update.message.chat_id, text="Your total score was " + score + "/5!")
 
 dp.add_handler(CommandHandler('alphabet', generateAlphabet))
@@ -59,7 +111,7 @@ dp.add_handler(CommandHandler('vocabulary', generateVocabulary))
 def translateJapaneseToEnglish(text):
     translator = Translator()
     translation = translator.translate(text, dest='en', src='ja')
-    #print(translation.text)
+        #print(translation.text)
     return translation.text
 
 def translateEnglishToJapanese(text):
