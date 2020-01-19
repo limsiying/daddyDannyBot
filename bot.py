@@ -5,6 +5,7 @@ import requests
 import apiai
 import json
 import re
+from random import randint
 
 TOKEN = '1016477578:AAGmmknBxRKyIbh_2XmRhcuK-fXwW0wJ9JE'
 DIALOG_TOKEN = '02ab3a2fe7494e2c80d38726ebeec2b0'
@@ -31,7 +32,22 @@ mode_handler = CommandHandler('japanese', selectMode)
 dp.add_handler(mode_handler)
 
 def generateAlphabet(update, context):
-    context.bot.send_message(chat_id=update.message.chat_id, text=' ひらがな')
+#    cpntext.bot.send_photo(chat_id=update.message.chat_id, photo=open('hiraChart.jpg', 'rb'))
+    context.bot.send_message(chat_id=update.message.chat_id, text='Time for a ひらがな quiz! What is the romaji of the following hiragana?')
+    hiragana_jap = ['あ', 'い', 'う', 'え', 'お', 'か', 'き', 'く', 'け', 'こ', 'さ', 'し', 'す', 'せ', 'そ', 'た', 'ち', 'つ', 'て', 
+            'と', 'な', 'に', 'ぬ', 'ね', 'の', 'は', 'ひ', 'ふ', 'へ', 'ほ', 'ま', 'み', 'む', 'め', 'も', 'や', 'ゆ', 'よ', 'ら', 
+            'り', 'る', 'れ', 'ろ', 'わ', 'ん']
+    hiragana_romaji = ['a', 'i', 'u', 'o','ka', 'ki', 'ku', 'ke', 'ko', 'sa', 'shi', 'su', 'se', 'so', 'ta', 'chi', 'tsu', 'te', 'to', 
+        'na', 'ni', 'nu', 'ne', 'no', 'ha', 'hi', 'fu', 'he', 'ho', 'ma', 'mi', 'mu', 'me', 'mo', 'ya', 'yu', 'yo', 'ra', 'ri', 'ru', 
+        're', 'ro', 'wa', 'n']
+    score = 0
+    for i in range(0, 5):
+        rng = randint(0, 45)
+        context.bot.send_message(chat_id=update.message.chat_id, text=hiragana_jap[rng])
+        guess = update.message.text
+        if guess == hiragana_romaji[rng]:
+            score += 1
+    context.bot.send_message(chat_id=update.message.chat_id, text="Your total score was " + score + "/5!")
 
 dp.add_handler(CommandHandler('alphabet', generateAlphabet))
 
