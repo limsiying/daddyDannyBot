@@ -42,21 +42,7 @@ def generateAlphabet(update, context):
         'na', 'ni', 'nu', 'ne', 'no', 'ha', 'hi', 'fu', 'he', 'ho', 'ma', 'mi', 'mu', 'me', 'mo', 'ya', 'yu', 'yo', 'ra', 'ri', 'ru', 
         're', 'ro', 'wa', 'n']
     score = 0
-      
-    #rng = randint(0,45)
-    #context.bot.send_message(chat_id=update.message.chat_id,text=hiragana_jap[rng])
-    #update.message.reply_text(hiragana_jap[rng])
-    
-
-    #guess=update.message.text
-    #if guess == hiragana_romaji[rng]:
-    #    update.message.reply_text('Correct!(✿ ◕‿◕)')
-    #    score += 1
-    #else:
-    #    update.message.reply_text('Wrong uwu') 
-    
-    #for i in range(0, 5):
-    
+  
     char1 = randint(0,45)
     char2 = randint(0,45)
     
